@@ -1,19 +1,14 @@
-import PostCard from "@/components/ui/PostCard";
-import { Post } from "@/types/posts";
+import { NameProvider } from "@/components/context/NameProvider";
+import { NameDisplay } from "@/components/context/NameDisplay";
+import UserProfile from "@/components/context/UserProfile";
 
-async function getPosts() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  return res.json();
-}
-
-export default async function Home() {
-  const posts: Post[] = await getPosts();
-
+export default function Home() {
   return (
-    <div className="flex flex-col gap-4">
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
-    </div>
+    <NameProvider>
+      <div className="container mx-auto">
+        <NameDisplay />
+        <UserProfile />
+      </div>
+    </NameProvider>
   );
 }
