@@ -1,8 +1,11 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "@/redux/slices/cartSlice";
+import { RootState, AppDispatch } from "@/redux/store";
+import { fetchProducts } from "@/redux/slices/productSlice";
+import { useEffect } from "react";
 
 interface Product {
     id: number;
@@ -12,8 +15,23 @@ interface Product {
     price: number;
 }
 
-const ProductList = ({ products }: { products: Product[] }) => {
-    const dispatch = useDispatch();
+const ProductList = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const products = useSelector((state: RootState) => state.products.products);
+    const status = useSelector((state: RootState) => state.products.status);
+    const error = useSelector((state: RootState) => state.products.error);
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
+
+    if (status === "loading") {
+        return <div>Loading...</div>;
+    }
+    if (status === "failed") {
+        return <div>Error: {error}</div>;
+    }
+
     return (
         <div className="grid grid-cols-3 gap-4">
             {products.map((product: Product) => (
