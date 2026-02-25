@@ -5,6 +5,14 @@ import loggerMiddleware from "./reduxMiddleware";
 import productReducer from "./slices/productSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import {
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist/es/constants";
 
 const counterPersistConfig = {
   key: "counter",
@@ -26,7 +34,11 @@ export const store = configureStore({
     products: productReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(loggerMiddleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(loggerMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
