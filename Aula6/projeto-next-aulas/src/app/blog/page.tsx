@@ -1,4 +1,4 @@
-import PostCard from "@/components/ui/PostCard";
+import PostList from "@/components/blog/PostList";
 import { Post } from "@/types/posts";
 
 async function getPosts() {
@@ -11,11 +11,7 @@ const BlogPage = async () => {
 
     return (
         <div className="container mx-auto">
-            <div className="m-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
-                {posts.map((post) => (
-                    <PostCard key={post.id} post={post} />
-                ))}
-            </div>
+            <PostList posts={posts} />
         </div>
     );
 };
