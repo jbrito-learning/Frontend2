@@ -1,17 +1,13 @@
 import PostList from "@/components/blog/PostList";
 import { Post } from "@/types/posts";
-
-async function getPosts() {
-    const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-    return res.json();
-}
+import axios from "axios";
 
 const BlogPage = async () => {
-    const posts: Post[] = await getPosts();
+    const { data: posts } = await axios.get("https://jsonplaceholder.typicode.com/posts");
 
     return (
         <div className="container mx-auto">
-            <PostList posts={posts} />
+            <PostList posts={posts as Post[]} />
         </div>
     );
 };
