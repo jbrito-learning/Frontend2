@@ -25,6 +25,9 @@ const Navbar = () => {
                 <li>
                     <Link href="/store">Store</Link>
                 </li>
+                <li>
+                    <Link href="/todos">Todos</Link>
+                </li>
             </ul>
             <div className="flex gap-4">
                 <button onClick={() => toggleCart()}>Cart</button>
