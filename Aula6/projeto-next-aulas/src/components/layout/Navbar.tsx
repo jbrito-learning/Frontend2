@@ -28,6 +28,12 @@ const Navbar = () => {
                 <li>
                     <Link href="/todos">Todos</Link>
                 </li>
+                <li>
+                    <Link href="/login">Login</Link>
+                </li>
+                <li>
+                    <Link href="/dashboard">Dashboard</Link>
+                </li>
             </ul>
             <div className="flex gap-4">
                 <button onClick={() => toggleCart()}>Cart</button>
