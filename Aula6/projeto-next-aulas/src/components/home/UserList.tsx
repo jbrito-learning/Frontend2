@@ -1,4 +1,4 @@
-import { getBaseUrl } from "@/lib/utils";
+import { getBaseUrl } from "@/lib/server-utils";
 
 interface User {
     id: number;
