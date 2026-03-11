@@ -1,14 +1,23 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { jwtVerify } from "jose";
 
-export function proxy(request: NextRequest) {
-  const token = request.cookies.get("token");
+const SECRET_KEY = process.env.SECRET_KEY ?? "";
+
+export async function proxy(request: NextRequest) {
+  const token = request.cookies.get("token")?.value;
 
   if (!token) {
-    return NextResponse.redirect(new URL("/login?error=true", request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  return NextResponse.next();
+  try {
+    await jwtVerify(token, new TextEncoder().encode(SECRET_KEY));
+    return NextResponse.next();
+  } catch (error: unknown) {
+    console.error(error);
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
 }
 
 export const config = {
